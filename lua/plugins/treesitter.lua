@@ -3,9 +3,9 @@ return {
     {
         'nvim-treesitter/nvim-treesitter', 
         build = ':TSUpdate',
+        lazy = false ,
         config = function()
-            local treesitter = require("nvim-treesitter.configs")
-            treesitter.setup{
+            require("nvim-treesitter.configs").setup{
                 -- A list of parser names, or "all" (the listed parsers MUST always be installed)
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
 
@@ -28,7 +28,6 @@ return {
                 indent = {
                     enable = true
                 },
-
                 rainbow = {
                     enable = true,
                     extended_mode = true,
