@@ -8,8 +8,8 @@ return {
       local onedark = require('onedark');
       onedark.setup{
         style = 'darker',
-        transparency = false,
-        term_colors = false ,
+        transparent = true,
+        term_colors = true,
         toggle_style_key = '<leader>cs', -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
         toggle_style_list = {'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' }, -- List of styles to toggle between
         diagnostics = {
