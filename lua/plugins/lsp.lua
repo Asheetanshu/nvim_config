@@ -20,15 +20,21 @@ return {
 
       vim.lsp.config("clangd", {
         cmd = {
-          "D:/programming/c_files/clang_gcc/mingw64/bin/clangd.exe",
+          "/usr/sbin/clangd"
         },
       })
       vim.lsp.enable('clangd')
+
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(event)
-          local opts = { buffer = event.buf }
+          local opts = { buffer = event.buf , noremap = true , silent = true }
+          vim.keymap.set("n", "K" , function()
+            vim.lsp.buf.hover({ border = "rounded" })
+          end , opts)
+          vim.keymap.set("i" , "<C-k>" , function()
+            vim.lsp.buf.signature_help({border = "rounded"})
+          end , opts)
           vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "<leader>gh", vim.lsp.buf.hover, opts)
           vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, opts)
           vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
@@ -64,6 +70,5 @@ return {
         },
       })
     end ,
-    -- 3. CMP BORDER CONFIG
   },
 }
