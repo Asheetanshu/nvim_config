@@ -8,22 +8,31 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       require('mason').setup({})
       require('mason-lspconfig').setup({
         ensure_installed = { 'clangd', 'rust_analyzer' },
         handlers = {
           function(server_name)
-            require('lspconfig')[server_name].setup({})
+            require('lspconfig')[server_name].setup({
+              capabilities = capabilities,
+            })
           end,
-        },
-      })
 
-      vim.lsp.config("clangd", {
-        cmd = {
-          "/usr/sbin/clangd"
+          ["clangd"] = function()
+            require('lspconfig').clangd.setup({
+              capabilities = capabilities,
+              cmd = { "/usr/sbin/clangd" },
+            })
+          end,
+
+          ["rust_analyzer"] = {
+            checkOnSave = {
+              command = "clippy"
+            }
+          }
         },
       })
-      vim.lsp.enable('clangd')
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(event)
